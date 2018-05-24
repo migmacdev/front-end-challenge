@@ -12,7 +12,6 @@ import dropdown from '../../sharedfiles/images/icon_dropdown@2x.png';
 /*
 *	NavigationBar using responsive bootstrap components
 */
-
 class NavigationBar extends React.Component{
 	
 	render(){
