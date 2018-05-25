@@ -14,9 +14,11 @@ class APILayer {
 		fetch(availableBooksUrl)
 			.then((resp) => resp.json()) // Transform the data into json
 		  	.then(function(data) {
-		  		console.log(data.payload);
 			    callback(data.payload);
-		    }
+		    })
+		    .catch(function(error) {
+        		console.log("error: " + error);
+    		}
 		);
 
 	}
