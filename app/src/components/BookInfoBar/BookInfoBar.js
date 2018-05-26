@@ -10,8 +10,9 @@ import BookActions from '../../data/Books/BookActions';
 class BookInfoBar extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {books: []};
+		this.state = {books: [], currentSelection: ''};
 		this._onChange = this._onChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	/**
@@ -29,13 +30,21 @@ class BookInfoBar extends React.Component{
 		BookActions.getBooks();
 	}
 
+	handleChange(event){
+		console.log(event.target.value);
+		this.setState({currentSelection: event.target.value});
+		console.log(this.state.books[event.target.value].volume);
+	}
+
+
 	render(){
 		return (
 			<div className="page-header container">
-				<select>						
-					{this.state.books.map((book, i) => <option key = {i}>{book.book}</option>)}
+				<select onChange = {this.handleChange}>						
+					{this.state.books.map((book, i) => <option value = {i} key = {i}>{book.book}</option>)}
 				</select>
-
+				<label>Volume: </label>
+				
 			</div>
 		);
 	}

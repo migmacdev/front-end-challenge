@@ -30,10 +30,6 @@ const BooksStore = new AvlBooksStore();
 BitsoDispatcher.register((payload) => {
 
 	switch (payload.type) {	
-		case BookActionTypes.ADD_BOOK:
-			_store.push(payload.data);
-			BooksStore.emit(CHANGE_EVENT);
-			break;
 		case BookActionTypes.GET_BOOKS:
 			for (var i in payload.data) {
   				_store = _store.set(i,payload.data[i]);
