@@ -8,7 +8,7 @@ registerServiceWorker();
 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ExchangePage from './components/ExchangePage/ExchangePage';
+import ExchangePage from './components/ExchangePage';
 
 
 ReactDOM.render(<ExchangePage />, document.getElementById('root'));

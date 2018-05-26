@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigationBar from '../NavigationBar/NavigationBar';
-import BookInfoBar from '../BookInfoBar/BookInfoBar';
+import NavigationBar from '../NavigationBar';
+import BookInfoBar from '../BookInfoBar';
 
 /*
 *	ExhangePage, defines the structure of the page panels

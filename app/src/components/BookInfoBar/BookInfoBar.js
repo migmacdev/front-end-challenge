@@ -23,9 +23,6 @@ class BookInfoBar extends React.Component{
 	componentDidMount(){
 		BookStore.addChangeListener(this._onChange);
 		BookActions.getBooks();
-		/*APILayer.getBooksInfo((data) => {
-			this.setState({books: data});	
-		});*/
 	}
 
 	//Render books dropdown
