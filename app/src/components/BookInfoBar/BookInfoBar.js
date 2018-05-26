@@ -1,11 +1,11 @@
 import React from 'react';
-//import APILayer from '../../data/APILayer';
 import { DropdownButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
 import BookStore from '../../data/Books/BookStore';
 import BookActions from '../../data/Books/BookActions';
+
 /*
-*	ExhangePage, defines the structure of the page panels
+*	BookInfoBar: Book information bar to show book's select, Volume, Max, Min and Variacion
 */
 class BookInfoBar extends React.Component{
 	constructor(props){
@@ -14,18 +14,21 @@ class BookInfoBar extends React.Component{
 		this._onChange = this._onChange.bind(this);
 	}
 
+	/**
+	+ _onChange: Store's on change callback, fetchs the store data when a change occurs
+	*/
 	_onChange(){
-		console.log("READY");
 		this.setState({books: BookStore.getBooks()});
-		console.log(this.state.books);
 	}
-	//Fetch books data
+
+	/**
+	* Subscribe to change event on store
+	*/
 	componentDidMount(){
 		BookStore.addChangeListener(this._onChange);
 		BookActions.getBooks();
 	}
 
-	//Render books dropdown
 	render(){
 		return (
 			<div className="page-header container">

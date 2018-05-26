@@ -3,7 +3,7 @@ import NavigationBar from '../NavigationBar';
 import BookInfoBar from '../BookInfoBar';
 
 /*
-*	ExhangePage, defines the structure of the page panels
+* ExhangePage: Compose the ExchangePage through the components
 */
 class ExchangePage extends React.Component{
 
