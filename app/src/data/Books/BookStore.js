@@ -4,25 +4,22 @@ import BookActionTypes from './BookActionTypes';
 import Book from './Book';
 import { EventEmitter } from 'events';
 
+var _store = Immutable.Map();
 const CHANGE_EVENT = 'change';
-
-let _store = {};
 
 class AvlBooksStore extends EventEmitter {
 
-  addChangeListener(cb) {
-  	console.log("registered");
-    this.on(CHANGE_EVENT, cb);
-  }
+	addChangeListener(cb) {
+		this.on(CHANGE_EVENT, cb);
+	}
 
-  removeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT, cb);
-  }
+	removeChangeListener(cb) {
+		this.removeListener(CHANGE_EVENT, cb);
+	}
 
-  getBooks() {
-    return _store;
-  }
-
+	getBooks() {
+		return _store.valueSeq().toArray();;
+	}
 }
 
 
@@ -31,61 +28,22 @@ class AvlBooksStore extends EventEmitter {
 const BooksStore = new AvlBooksStore();
 
 BitsoDispatcher.register((payload) => {
-  	const action = payload.action;
-  	switch (payload.type) {	
-  		case BookActionTypes.ADD_BOOK:
-  			console.log(payload);
-  			_store.push(payload.data);
-  			BooksStore.emit(CHANGE_EVENT);
-  			break;
-  		case BookActionTypes.GET_BOOKS:
-  			console.log(payload);
-  			_store =payload.data;
-  			BooksStore.emit(CHANGE_EVENT);
-  			break;
-	  	default:
-	    	return true;
-  	}
+
+	switch (payload.type) {	
+		case BookActionTypes.ADD_BOOK:
+			_store.push(payload.data);
+			BooksStore.emit(CHANGE_EVENT);
+			break;
+		case BookActionTypes.GET_BOOKS:
+			for (var i in payload.data) {
+  				_store = _store.set(i,payload.data[i]);
+			}
+			console.log(_store);
+			BooksStore.emit(CHANGE_EVENT);
+			break;
+		default:
+			return true;
+	}
 });
 
 export default BooksStore;
-
-/*
-class AvlBooksStore extends EventEmitter {
-
-	
-	dispatcherCallback(action, data) {
-        switch (action.type) {
-            case BookTypes.GET_BOOKS:
-                this.emit(CHANGE_EVENT,data);
-                break;
-        }
-        return true;
-    }
-
-	/*reduce(state, action){
-		switch(action.type){
-			case BookTypes.GET_BOOKS:
-				action.data.map((book) =>
-					{
-						console.log(book);
-						var bk = new Book({
-							book: book.book,
-							volume: book.volume,
-							high: book.high,
-							low: book.low,
-							vwap: book.vwap,
-						});
-
-						state = state.set(bk.book, bk);
-						return state;
-					}
-				);
-				return state;
-	
-			default:
-				return state;
-		}
-	}
-}
-*/

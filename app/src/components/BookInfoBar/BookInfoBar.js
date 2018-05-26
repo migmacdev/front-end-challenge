@@ -5,7 +5,7 @@ import BookStore from '../../data/Books/BookStore';
 import BookActions from '../../data/Books/BookActions';
 
 /*
-*	BookInfoBar: Book information bar to show book's select, Volume, Max, Min and Variacion
+* BookInfoBar: Book information bar to show book's select, Volume, Max, Min and Variacion
 */
 class BookInfoBar extends React.Component{
 	constructor(props){
