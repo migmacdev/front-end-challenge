@@ -44,7 +44,6 @@ class BookInfoBar extends React.Component{
 					{this.state.books.map((book, i) => <option value = {i} key = {i}>{book.book}</option>)}
 				</select>
 				<label>Volume: </label>
-				
 			</div>
 		);
 	}
