@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import test from './test.less';
+import ExchangePage from './components/ExchangePage';
 
 class App extends React.Component{
 	render(){
-		console.log(test);
 		return (
-			<div className = {test.header}>Hello Appsss</div>
+			<ExchangePage />
 		);
 	}
 }

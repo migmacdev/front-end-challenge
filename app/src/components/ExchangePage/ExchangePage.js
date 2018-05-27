@@ -1,17 +1,19 @@
 import React from 'react';
 import NavigationBar from '../NavigationBar';
-import BookInfoBar from '../BookInfoBar';
 
 /*
 * ExhangePage: Compose the ExchangePage through the components
 */
 class ExchangePage extends React.Component{
 
+	constructor(props){
+		super(props);
+		this.state = {book: "BTC_MXN"};
+	}
 	render(){
 		return (
 			<div>
-				<NavigationBar />
-				<BookInfoBar />
+				<NavigationBar book = {this.state.book} />
 			</div>
 		);
 	}
