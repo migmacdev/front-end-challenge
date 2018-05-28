@@ -19,6 +19,10 @@ class BookInfoBar extends React.Component{
 	componentDidMount(){
 		APILayer.getBooksList((books) => {
 			this.setState({"booksList": books});
+
+			if(this.props.onChange){
+				this.props.onChange(books[0]);
+			}
 			APILayer.getBookData(books[0], (book) => {
 				this.setState({"loadedBook": book});
 			});
