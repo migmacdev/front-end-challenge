@@ -26,7 +26,7 @@ class ExchangePage extends React.Component{
 				<BookInfoBar onChange = {(evt) => this.onSelectionChange(evt)} />
 				<div>
 					<div className = "row">
-						<LastTradesPanel book = {this.state.currentBook} className = "col-xs-2" />
+						<LastTradesPanel book = {this.state.currentBook} live = {true} className = "col-xs-2" />
 						<div className = "col-xs-8">PANEL CENTRAL</div>
 					</div>
 				</div>
