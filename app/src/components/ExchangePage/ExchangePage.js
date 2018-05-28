@@ -2,6 +2,7 @@ import React from 'react';
 import NavigationBar from '../NavigationBar';
 import BookInfoBar from '../BookInfoBar';
 import LastTradesPanel from '../LastTradesPanel';
+import Book from '../../data/Book';
 
 /*
 * ExhangePage: Compose the ExchangePage through the components
@@ -10,16 +11,12 @@ class ExchangePage extends React.Component{
 
 	constructor(props){
 		super(props);
-		this.state = {currentBook: "","books": ['BTC_MXN', "ETC"]};
+		this.state = {currentBook: {}};
 	}
 
 	onSelectionChange(selectedBook){
-		console.log(selectedBook);
-		this.setState({"currentBook": selectedBook});
-	}
-
-	onComponentDidMount(){
-		this.setState({"currentBook": "BTC_MXN"});
+		var book = new Book(selectedBook);
+		this.setState({"currentBook": book});
 	}
 
 	render(){
@@ -27,9 +24,9 @@ class ExchangePage extends React.Component{
 			<div>
 				<NavigationBar book = {this.state.currentBook} />
 				<BookInfoBar onChange = {(evt) => this.onSelectionChange(evt)} />
-				<div className = "container">
+				<div>
 					<div className = "row">
-						<LastTradesPanel className = "col-xs-2" />
+						<LastTradesPanel book = {this.state.currentBook} className = "col-xs-2" />
 						<div className = "col-xs-8">PANEL CENTRAL</div>
 					</div>
 				</div>
