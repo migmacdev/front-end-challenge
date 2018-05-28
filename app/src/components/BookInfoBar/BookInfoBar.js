@@ -20,9 +20,12 @@ class BookInfoBar extends React.Component{
 		APILayer.getBooksList((books) => {
 			this.setState({"booksList": books});
 
+			//Call parent function with initial value
 			if(this.props.onChange){
 				this.props.onChange(books[0]);
 			}
+			
+			//Populate this view required data(max, min, volumen, etc)
 			APILayer.getBookData(books[0], (book) => {
 				this.setState({"loadedBook": book});
 			});
@@ -36,10 +39,12 @@ class BookInfoBar extends React.Component{
 	handleChange(evt){
 		var selectedBook = evt.target.value;
 		
+		//Get data for this componets fields
 		APILayer.getBookData(selectedBook, (book) => {
 			this.setState({"loadedBook": book});
 		});
 
+		//Execute callback in parent
 		if(this.props.onChange){
 			this.props.onChange(selectedBook);
 		}

@@ -15,7 +15,9 @@ class LastTradesPanel extends React.Component{
 	componentWillReceiveProps(newProps){
 		//If the props value changed
 		if (newProps !== this.props){
+			//if properties are defined
 			if(newProps.book.major !== undefined && newProps.book.minor !== undefined ){
+				//Get last trades with bookname
 				var bookName = newProps.book.name;
 				APILayer.getLastTrades(bookName,(trades) => {
 					this.setState({"lastTrades": trades});
