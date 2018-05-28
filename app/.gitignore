@@ -7,8 +7,8 @@
 /coverage
 
 # production
-/build/*
-!*/build/index.html
+/dist/*
+!/dist/index.html
 
 # misc
 .DS_Store
