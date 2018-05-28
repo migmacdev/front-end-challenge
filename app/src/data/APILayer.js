@@ -1,9 +1,4 @@
-/*
-* This class handles the communication between the API and the components requests
-* by setting callbacks the data can be managed before sent to populate components
-* This allows the app to change the source of the data without messing around with the components
-*/
-
+//URLS and mockup data, booksInfo, mocks the info in a responds, because the bitso API doesn't allow CORS, to some URL's
 const availableBooksUrl = 'https://api.bitso.com/v3/available_books/';
 const booksInfo = {
 	"btc_mxn" : {"high":"149500.00","last":"148000.04","created_at":"2018-05-26T15:19:22+00:00","book":"btc_mxn","volume":"78.03237765","vwap":"145818.25005458","low":"145003.01","ask":"148497.19","bid":"148000.00"},
@@ -17,7 +12,10 @@ const booksInfo = {
 	"bch_mxn": {"high":"20000.00","last":"19800.00","created_at":"2018-05-26T15:44:41+00:00","book":"bch_mxn","volume":"180.18019162","vwap":"19097.38378095","low":"19000.00","ask":"19999.99","bid":"19900.00"}
 };
 
-function getFormattedData(data){
+/**
+* Make an object with the received data assigning new key names
+*/
+function formatData(data){
 	var books = [];
 	console.log(data);
 	data.forEach((book) => {
@@ -32,35 +30,28 @@ function getFormattedData(data){
 	return books;
 }
 
-
+/*
+* This class handles the communication between the API and the components requests
+* by setting callbacks, the data can be managed before sent to populate the components
+* This allows the app to change the data source without messing around with the components
+*/
 class APILayer {
 
-	static getBooksInfo(callback){
-		console.log("Ask for data");
-		//Fetch data from specified url and send the result to the received callback
-		fetch(availableBooksUrl)
-			.then((resp) => resp.json()) // Transform the data into json
-		  	.then(function(data) {
-		  		console.log("data getted");
-			    callback(getFormattedData(data.payload));
-		    })
-		    .catch(function(error) {
-        		console.log("error: " + error);
-    		}
-		);
-	}
+	/**
+	* This function is a mockup , since the URL to get this data in the bitso API, doesn't allow CORS
+	*/
 	static getBookData(book, callback){
-		console.log("Ask for book");
-		console.log(booksInfo[book]);
-		//Fetch data from specified url and send the result to the received callback
 		callback(booksInfo[book]);
 	}
 
+	/**
+	* Gets list of available books from the bitso API, and responds with the list of names
+	*/
 	static getBooksList(callback){
 		fetch(availableBooksUrl)
 			.then((resp) => resp.json()) // Transform the data into json
 		  	.then(function(data) {
-			    callback(data.payload.map(a => a.book));
+			    callback(data.payload.map(b => b.book));
 		    })
 		    .catch(function(error) {
         		console.log("error: " + error);
