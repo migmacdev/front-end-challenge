@@ -1,8 +1,8 @@
 import React from 'react';
 import { DropdownButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
-import BookStore from '../../data/Books/BookStore';
-import BookActions from '../../data/Books/BookActions';
+import style from './style.less'
+import APILayer from '../../data/APILayer';
 
 /*
 * BookInfoBar: Book information bar to show book's select, Volume, Max, Min and Variacion
@@ -10,40 +10,60 @@ import BookActions from '../../data/Books/BookActions';
 class BookInfoBar extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {books: [], currentSelection: ''};
-		this._onChange = this._onChange.bind(this);
-		this.handleChange = this.handleChange.bind(this);
+		this.state = {"booksList": [], "loadedBook": {}};
 	}
 
 	/**
-	+ _onChange: Store's on change callback, fetchs the store data when a change occurs
-	*/
-	_onChange(){
-		this.setState({books: BookStore.getBooks()});
-	}
-
-	/**
-	* Subscribe to change event on store
+	* Fetch the data to load into the select dropdown, and displays the dafault values
 	*/
 	componentDidMount(){
-		BookStore.addChangeListener(this._onChange);
-		BookActions.getBooks();
+		APILayer.getBooksList((books) => {
+			this.setState({"booksList": books});
+			APILayer.getBookData(books[0], (book) => {
+				this.setState({"loadedBook": book});
+			});
+		});
 	}
 
-	handleChange(event){
-		console.log(event.target.value);
-		this.setState({currentSelection: event.target.value});
-		console.log(this.state.books[event.target.value].volume);
+	/*
+	* Handles Select box change, fetchs selected book data
+	* and make the callback to function in parent if exists
+	*/
+	handleChange(evt){
+		var selectedBook = evt.target.value;
+		
+		APILayer.getBookData(selectedBook, (book) => {
+			this.setState({"loadedBook": book});
+		});
+
+		if(this.props.onChange){
+			this.props.onChange(selectedBook);
+		}
 	}
 
-
+	/**
+	* Populates the select box with the booksList from state
+	* Delegates the change callback to the parent component, sending the selected value
+	*/
 	render(){
 		return (
-			<div className="page-header container">
-				<select onChange = {this.handleChange}>						
-					{this.state.books.map((book, i) => <option value = {i} key = {i}>{book.book}</option>)}
+			<div className="page-header container" className = {style.infobar}>
+				<select onChange = {(evt) => this.handleChange(evt)}>						
+					{this.state.booksList.map((book, i) => 
+						<option className = {style.item} value = {book} key = {i}>{book}</option>)
+					}
 				</select>
-				<label>Volume: </label>
+				<label>Volume:  </label>
+				<label>{this.state.loadedBook.volume}</label>
+
+				<label>Max:  </label>
+				<label>{this.state.loadedBook.high}</label>
+
+				<label>Min:  </label>
+				<label>{this.state.loadedBook.low}</label>
+
+				<label>Variación:  </label>
+				<label>{this.state.loadedBook.vwap}</label>
 			</div>
 		);
 	}

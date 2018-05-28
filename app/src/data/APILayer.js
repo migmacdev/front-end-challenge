@@ -1,4 +1,3 @@
-import Book from './Books/Book';
 /*
 * This class handles the communication between the API and the components requests
 * by setting callbacks the data can be managed before sent to populate components
@@ -6,7 +5,7 @@ import Book from './Books/Book';
 */
 
 const availableBooksUrl = 'https://api.bitso.com/v3/available_books/';
-const bookInfo = {
+const booksInfo = {
 	"btc_mxn" : {"high":"149500.00","last":"148000.04","created_at":"2018-05-26T15:19:22+00:00","book":"btc_mxn","volume":"78.03237765","vwap":"145818.25005458","low":"145003.01","ask":"148497.19","bid":"148000.00"},
 	"eth_mxn" : {"high":"11800.00","last":"11759.91","created_at":"2018-05-26T15:20:14+00:00","book":"eth_mxn","volume":"265.84921184","vwap":"11453.69951708","low":"11326.01","ask":"11759.91","bid":"11560.34"},
 	"xrp_btc": {"high":"0.00008240","last":"0.00008185","created_at":"2018-05-26T15:21:06+00:00","book":"xrp_btc","volume":"12057.78073995","vwap":"0.00008086","low":"0.00008126","ask":"0.00008240","bid":"0.00008198"},
@@ -22,32 +21,51 @@ function getFormattedData(data){
 	var books = [];
 	console.log(data);
 	data.forEach((book) => {
-		books.push(new Book({
-			book: book.book, 
-			volume: bookInfo[book.book]["volume"],
-			high: bookInfo[book.book]["high"],
-			low: bookInfo[book.book]["low"],
-			vmap: bookInfo[book.book]["vwap"]
-		}));
+		books.push({
+			name: book.book, 
+			volume: booksInfo[book.book]["volume"],
+			high: booksInfo[book.book]["high"],
+			low: booksInfo[book.book]["low"],
+			vmap: booksInfo[book.book]["vwap"]
+		});
 	});
 	return books;
 }
 
+
 class APILayer {
 
 	static getBooksInfo(callback){
-		
+		console.log("Ask for data");
 		//Fetch data from specified url and send the result to the received callback
 		fetch(availableBooksUrl)
 			.then((resp) => resp.json()) // Transform the data into json
 		  	.then(function(data) {
+		  		console.log("data getted");
 			    callback(getFormattedData(data.payload));
 		    })
 		    .catch(function(error) {
         		console.log("error: " + error);
     		}
 		);
+	}
+	static getBookData(book, callback){
+		console.log("Ask for book");
+		console.log(booksInfo[book]);
+		//Fetch data from specified url and send the result to the received callback
+		callback(booksInfo[book]);
+	}
 
+	static getBooksList(callback){
+		fetch(availableBooksUrl)
+			.then((resp) => resp.json()) // Transform the data into json
+		  	.then(function(data) {
+			    callback(data.payload.map(a => a.book));
+		    })
+		    .catch(function(error) {
+        		console.log("error: " + error);
+    		}
+		);
 	}
 }
 
