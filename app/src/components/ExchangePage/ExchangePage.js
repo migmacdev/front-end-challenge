@@ -2,6 +2,7 @@ import React from 'react';
 import NavigationBar from '../NavigationBar';
 import BookInfoBar from '../BookInfoBar';
 import LastTradesPanel from '../LastTradesPanel';
+import StocksPanel from '../StocksPanel';
 import Book from '../../data/Book';
 
 /*
@@ -27,7 +28,7 @@ class ExchangePage extends React.Component{
 				<div>
 					<div className = "row">
 						<LastTradesPanel book = {this.state.currentBook} live = {true} className = "col-xs-2" />
-						<div className = "col-xs-8">PANEL CENTRAL</div>
+						<StocksPanel className = "col-xs-8">PANEL CENTRAL</StocksPanel>
 					</div>
 				</div>
 			</div>
