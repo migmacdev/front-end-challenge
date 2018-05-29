@@ -3,6 +3,7 @@ import NavigationBar from '../NavigationBar';
 import BookInfoBar from '../BookInfoBar';
 import LastTradesPanel from '../LastTradesPanel';
 import StocksPanel from '../StocksPanel';
+import TradingTable from '../TradingTable';
 import Book from '../../data/Book';
 
 /*
@@ -28,7 +29,10 @@ class ExchangePage extends React.Component{
 				<div>
 					<div className = "row">
 						<LastTradesPanel book = {this.state.currentBook} live = {true} className = "col-xs-2" />
-						<StocksPanel className = "col-xs-8">PANEL CENTRAL</StocksPanel>
+						<div className = "col-xs-8"> 
+							<StocksPanel ></StocksPanel>
+							<TradingTable book = {this.state.currentBook} live = {true} />
+						</div>
 					</div>
 				</div>
 			</div>

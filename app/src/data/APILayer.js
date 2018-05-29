@@ -1,6 +1,7 @@
 //URLS and mockup data, booksInfo, mocks the info in a responds, because the bitso API doesn't allow CORS, to some URL's
 const availableBooksUrl = 'https://api.bitso.com/v3/available_books/';
 const lastTradesURL = "https://api.bitso.com/v3/trades/?book=";
+const orderBookURL ="https://api.bitso.com/v3/order_book/?book=";
 const booksInfo = {
 	"btc_mxn" : {"high":"149500.00","last":"148000.04","created_at":"2018-05-26T15:19:22+00:00","book":"btc_mxn","volume":"78.03237765","vwap":"145818.25005458","low":"145003.01","ask":"148497.19","bid":"148000.00"},
 	"eth_mxn" : {"high":"11800.00","last":"11759.91","created_at":"2018-05-26T15:20:14+00:00","book":"eth_mxn","volume":"265.84921184","vwap":"11453.69951708","low":"11326.01","ask":"11759.91","bid":"11560.34"},
@@ -74,6 +75,24 @@ class APILayer {
     		}
 		);
 	}
+
+	/**
+	* Returs last orders from the specified bookname and sends back the data through the callback
+	*/
+	static getOrders(bookName,callback){
+		fetch(orderBookURL + bookName)
+			.then((resp) => resp.json()) // Transform the data into json
+		  	.then(function(data) {
+		  		console.log(data.payload);
+			    callback(data.payload);
+		    })
+		    .catch(function(error) {
+        		console.log("error: " + error);
+    		}
+		);
+	}
+
+
 }
 
 export default APILayer;
