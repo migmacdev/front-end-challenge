@@ -14,6 +14,18 @@ const booksInfo = {
 	"bch_mxn": {"high":"20000.00","last":"19800.00","created_at":"2018-05-26T15:44:41+00:00","book":"bch_mxn","volume":"180.18019162","vwap":"19097.38378095","low":"19000.00","ask":"19999.99","bid":"19900.00"}
 };
 
+const booksAndValue = [
+	{"book":"btc_mxn", "change": "up", "value" : "149500.00"},
+	{"book":"eth_mxn", "change": "down", "value" : "11800.00"},
+	{"book":"xrp_btc", "change": "down", "value" : "0.00008240"},
+	{"book":"xrp_mxn", "change": "up", "value" : "12.23"},
+	{"book":"eth_btc", "change": "down", "value" : "0.08099898"},
+	{"book":"bch_btc", "change": "up", "value" : "0.13599998"},
+	{"book":"ltc_btc", "change": "down", "value" : "0.01619960"},
+	{"book":"ltc_mxn", "change": "up", "value" : "2415.00"},
+	{"book":"bch_mxn", "change": "down", "value" : "20000.00"},
+];
+
 /**
 * Make an object with the received data assigning new key names
 */
@@ -92,6 +104,17 @@ class APILayer {
 		);
 	}
 
+	static getBooksListAndValue(callback){
+		fetch(availableBooksUrl)
+			.then((resp) => resp.json()) // Transform the data into json
+		  	.then(function(data) {
+			    callback(booksAndValue);
+		    })
+		    .catch(function(error) {
+        		console.log("error: " + error);
+    		}
+		);
+	}
 
 }
 

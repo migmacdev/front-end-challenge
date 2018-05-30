@@ -5,7 +5,7 @@ import LastTradesPanel from '../LastTradesPanel';
 import StocksPanel from '../StocksPanel';
 import TradingTable from '../TradingTable';
 import Book from '../../data/Book';
-
+import MarketsSidePanel from '../MarketsSidePanel';
 /*
 * ExhangePage: Compose the ExchangePage through the components
 */
@@ -33,6 +33,7 @@ class ExchangePage extends React.Component{
 							<StocksPanel ></StocksPanel>
 							<TradingTable book = {this.state.currentBook} live = {true} />
 						</div>
+						<MarketsSidePanel/>
 					</div>
 				</div>
 			</div>
