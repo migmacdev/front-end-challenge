@@ -3,7 +3,7 @@ import APILayer from '../../data/APILayer';
 import style from './style.less';
 
 /*
-*	LastTradesPanel using responsive bootstrap components
+*	TradingTable using responsive bootstrap components
 */
 class TradingTable extends React.Component{
 
@@ -12,17 +12,17 @@ class TradingTable extends React.Component{
 	}
 
 	/**
-	* Hits the APILayer to fetch last trades
+	* Hits the APILayer to fetch last orders
 	*/
 	loadOrders(bookName){
-		//Get last trades with bookname
+		//Get last orders with bookname
 		APILayer.getOrders(bookName,(orders) => {
 			this.setState(orders);
 		});
 	}
 
 	/**
-	* Tick runs if the property live is set to true, this fetchs data from APILayer constantly
+	* Tick runs if the property live is set to true, this fetchs data from APILayer constantly to this objects state
 	*/
 	tick(){
 		if(this.props.book.name !== undefined){
@@ -31,7 +31,7 @@ class TradingTable extends React.Component{
 	}
 
 	/**
-	* Keeps track of the changing props, to load trades from the new book
+	* Keeps track of the changing props, to load orders from the new book
 	*/
 	componentWillReceiveProps(newProps){
 		//If the props value changed
@@ -61,12 +61,12 @@ class TradingTable extends React.Component{
 		clearInterval(this.timerId);
 	}
 
-
+	/**
+	* retuns a table with the values extracted from this.state.asks
+	*/
 	getAsks(){
-		console.log("------------");
-		console.log(this.state);
 		return (<div className="bgleftpanel col-xs-4">
-			<div className = "page-header">POSTURAS DE COMPRA {this.props.book.minor} Bid</div>
+			<div className = "page-header">Ask {this.props.book.minor} POSTURAS DE VENTA</div>
 			<table>
 				{/*Table Heades*/}
 				<tr>
@@ -92,18 +92,46 @@ class TradingTable extends React.Component{
 		</div>);
 	}
 
+	/**
+	* retuns a table with the values extracted from this.state.bids
+	*/
 	getBids(){
-
+		return (<div className="bgleftpanel col-xs-4">
+			<div className = "page-header">POSTURAS DE COMPRA {this.props.book.minor} Bid</div>
+			<table>
+				{/*Table Heades*/}
+				<tr>
+					<th></th>
+					<th>SUM</th>
+		   				<th>{this.props.book.major} MONTO</th> 
+		   				<th>{this.props.book.minor} VALOR</th>
+		   				<th>{this.props.book.minor} PRECIO</th>
+					</tr>
+					{/*Table rows*/}
+					{
+						this.state.bids.map((order, i) => 
+						<tr id = {i}>
+							<td className = "bar"></td>
+					    	<td></td>
+					    	<td>{order.amount}</td>
+					    	<td></td>
+					    	<td>{order.price}</td>
+			  			</tr>
+			  		)
+				}
+			</table>
+		</div>);
 	}
-
-
 
 	render(){
 		if(this.state == null){
 			return(<p>Loading</p>);
 		}
 		return (
-			this.getAsks()
+			<div>
+			{this.getBids()}
+			{this.getAsks()}
+			</div>
 		);
 	}
 }
