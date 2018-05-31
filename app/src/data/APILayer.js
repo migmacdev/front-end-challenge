@@ -255,7 +255,7 @@ class APILayer {
 	static getCandleStickData(book, time, callback){
 
 		var data = [];
-		msftResponseBtc.forEach((b, index) => {
+		/*msftResponseBtc.forEach((b, index) => {
 
 			var book = {};
 
@@ -287,15 +287,15 @@ class APILayer {
 		});
 
 		console.log("::_:_:_:_:_:_:_:");
-		console.log(data);
+		console.log(data);*/
 
 
-		/*fetch("//rrag.github.io/react-stockcharts/data/MSFT.tsv")
+		fetch("//rrag.github.io/react-stockcharts/data/MSFT.tsv")
 		.then(response => response.text())
 		.then(data => tsvParse(data, parseData(parseDate)))
 		.then(function(data) {
 		    callback(data);
-		});*/
+		});
 
 
 		/*msftORIGINAL.forEach((b) => {

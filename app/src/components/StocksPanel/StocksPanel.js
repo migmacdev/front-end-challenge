@@ -7,59 +7,36 @@ import {ButtonToolbar} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import {DropdownButton} from 'react-bootstrap';
 import {MenuItem} from 'react-bootstrap';
-
-
-import Chart from './CandleChart';
-import { getData } from "./utils"
-
-import { TypeChooser } from "react-stockcharts/lib/helper";
-
-class ChartComponent extends React.Component {
-	componentDidMount() {
-		getData("btc_mxn","1month",data => {
-			console.log(data);
-			this.setState({ data })
-		});
-	}
-	render() {
-		if (this.state == null) {
-			return <div>Loading...</div>
-		}
-		return (
-			<Chart type={"hybrid"} width = {600} data={this.state.data} />
-		)
-	}
-}
-
+import CandleChart from './CandleChart';
 /*
 *	LastTradesPanel using responsive bootstrap components
 */
 class StocksPanel extends React.Component{
 
+	constructor(props){
+		super(props);
+		this.state = {btnIcon : candleIcon};
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	componentDidMount() {
-
-		/*getData().then(data => {
-			console.log(data);
-			this.setState({ data })
-		})
-		*/
-
 		APILayer.getCandleStickData("book", "time",(data) =>{
 			this.setState({ data })
 		});
-
-		/*APILayer.getCandleStickData("btc_mxn","1month",(data) => {
-			console.log(".................");
-			console.log(data);
-			this.setState({ data })
-		});*/
 	}
+
+	handleChange(evt) {
+		console.log(evt);
+    	this.setState({btnIcon: barsIcon});  
+	}
+
 	graphControls(){
 		return(
 			<ButtonToolbar>
 				<DropdownButton
+					onSelect={() => { this.handleChange(evt)}}
 			      	bsSize="xsmall"
-			      	title={<img src = {candleIcon}/>}
+			      	title={<img src = {this.state.btnIcon}/>}
 			      	id="dropdown-size-extra-small">
 					<MenuItem eventKey="1"><img src = {candleIcon}/></MenuItem>
 					<MenuItem eventKey="2"><img src = {barsIcon} /></MenuItem>
@@ -89,7 +66,7 @@ class StocksPanel extends React.Component{
 
 
 	render(){
-		if (this.state == null || this.state.data.length === 0) {
+		if (this.state == null || this.state.data === undefined ||  this.state.data.length === 0 ) {
 			return <div>Loading...</div>
 		}
 
@@ -97,8 +74,8 @@ class StocksPanel extends React.Component{
 		console.log(this.state);
 		return(<div>
 			{this.graphControls()}
-			<Chart type={"hybrid"} width = {600} data={this.state.data} />
-			
+			<CandleChart />
+					
 		</div>);		
 	}
 }
