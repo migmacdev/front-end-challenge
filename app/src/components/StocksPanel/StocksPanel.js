@@ -16,18 +16,17 @@ import { TypeChooser } from "react-stockcharts/lib/helper";
 
 class ChartComponent extends React.Component {
 	componentDidMount() {
-		getData().then(data => {
+		getData("btc_mxn","1month",data => {
+			console.log(data);
 			this.setState({ data })
-		})
+		});
 	}
 	render() {
 		if (this.state == null) {
 			return <div>Loading...</div>
 		}
 		return (
-			<TypeChooser>
-				{type => <Chart type={type} width = {600} data={this.state.data} />}
-			</TypeChooser>
+			<Chart type={"hybrid"} width = {600} data={this.state.data} />
 		)
 	}
 }
@@ -37,6 +36,24 @@ class ChartComponent extends React.Component {
 */
 class StocksPanel extends React.Component{
 
+	componentDidMount() {
+
+		/*getData().then(data => {
+			console.log(data);
+			this.setState({ data })
+		})
+		*/
+
+		APILayer.getCandleStickData("book", "time",(data) =>{
+			this.setState({ data })
+		});
+
+		/*APILayer.getCandleStickData("btc_mxn","1month",(data) => {
+			console.log(".................");
+			console.log(data);
+			this.setState({ data })
+		});*/
+	}
 	graphControls(){
 		return(
 			<ButtonToolbar>
@@ -72,12 +89,18 @@ class StocksPanel extends React.Component{
 
 
 	render(){
+		if (this.state == null || this.state.data.length === 0) {
+			return <div>Loading...</div>
+		}
+
+		console.log("···········-.-.-.--.-.-.3");
+		console.log(this.state);
 		return(<div>
 			{this.graphControls()}
-
-
+			<Chart type={"hybrid"} width = {600} data={this.state.data} />
+			
 		</div>);		
 	}
 }
 
-export default ChartComponent;
+export default StocksPanel;
