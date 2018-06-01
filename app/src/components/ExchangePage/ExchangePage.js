@@ -6,6 +6,7 @@ import StocksPanel from '../StocksPanel';
 import TradingTable from '../TradingTable';
 import Book from '../../data/Book';
 import MarketsSidePanel from '../MarketsSidePanel';
+import style from './style.less';
 /*
 * ExhangePage: Compose the ExchangePage through the components
 */
@@ -23,15 +24,15 @@ class ExchangePage extends React.Component{
 
 	render(){
 		return (
-			<div>
+			<div className = {style.componentsContainer}>
 				<NavigationBar book = {this.state.currentBook} />
 				<BookInfoBar onChange = {(evt) => this.onSelectionChange(evt)} />
-				<div>
+				<div className = {style.container}>
 					<div className = "row">
-						<LastTradesPanel book = {this.state.currentBook} live = {true} className = "col-xs-2" />
-						<div className = "col-xs-8"> 
-							<StocksPanel ></StocksPanel>
-							<TradingTable book = {this.state.currentBook} live = {true} />
+						<LastTradesPanel book = {this.state.currentBook} live = {true}/>
+						<div className = "col-xs-8 row"> 
+							<StocksPanel className = "col-xs-8 col-sm-8"></StocksPanel>
+							<TradingTable className = "col-xs-8 col-sm-8" book = {this.state.currentBook} live = {true} />
 						</div>
 						<MarketsSidePanel/>
 					</div>

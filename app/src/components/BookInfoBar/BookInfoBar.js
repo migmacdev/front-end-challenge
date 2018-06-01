@@ -56,23 +56,28 @@ class BookInfoBar extends React.Component{
 	*/
 	render(){
 		return (
-			<div className="page-header container" className = {style.infobar}>
+			<div className="page-header container"  className = {style.infobar}>
 				<select onChange = {(evt) => this.handleChange(evt)}>						
 					{this.state.booksList.map((book, i) => 
 						<option className = {style.item} value = {book} key = {i}>{book}</option>)
 					}
 				</select>
-				<label>Volume:  </label>
-				<label>{this.state.loadedBook.volume}</label>
-
-				<label>Max:  </label>
-				<label>{this.state.loadedBook.high}</label>
-
-				<label>Min:  </label>
-				<label>{this.state.loadedBook.low}</label>
-
-				<label>Variación:  </label>
-				<label>{this.state.loadedBook.vwap}</label>
+				<div className = {style.couple}>
+					<label className= {style.darktext}>Volume:  </label>
+					<label className= {style.lighttext}>{this.state.loadedBook.volume}</label>
+				</div>
+				<div className = {style.couple}>
+					<label className= {style.darktext}>Max:  </label>
+					<label className= {style.lighttext}>{this.state.loadedBook.high}</label>
+				</div>
+				<div className = {style.couple}>
+					<label className= {style.darktext}>Min:  </label>
+					<label className= {style.lighttext}>{this.state.loadedBook.low}</label>
+				</div>
+				<div className = {style.couple}>
+					<label className= {style.darktext}>Variación:  </label>
+					<label className= {style.lighttext}>{this.state.loadedBook.vwap}</label>
+				</div>
 			</div>
 		);
 	}

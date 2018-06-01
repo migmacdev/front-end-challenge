@@ -64,11 +64,11 @@ class LastTradesPanel extends React.Component{
 
 	render(){
 		return (
-			<div className="bgleftpanel col-xs-4">
-				<div className = "page-header">ÚLTIMOS TRADES</div>
-				<table>
+			<div className={`col-xs-3 col-sm-3 ${style.panel}`}>
+				<div className = {style.pageheader}>ÚLTIMOS TRADES</div>
+				<table className = {style.tablecontainer}>
 					{/*Table Heades*/}
-					<tr>
+					<tr className = {style.tablecontainer}>
     					<th>Hora</th>
  		   				<th>{this.props.book.minor} Precio</th> 
  		   				<th>{this.props.book.major} Monto</th>
@@ -76,7 +76,7 @@ class LastTradesPanel extends React.Component{
   					{/*Table rows*/}
   					{
   						this.state.lastTrades.map((trade, i) => 
-							<tr id = {i}>
+							<tr className = {style.tablerow} id = {i}>
 						    	<td>{new Date(trade.created_at).toLocaleTimeString()}</td>
 						    	<td className = {style[trade.maker_side]}>{trade.price}</td> 
 						    	<td>{trade.amount}</td>

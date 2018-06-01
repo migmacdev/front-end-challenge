@@ -1,6 +1,6 @@
 import React from 'react';
-import brand from '../../sharedfiles/images/bitso_logo@2x.png';
-import dropdown from '../../sharedfiles/images/icon_dropdown@2x.png';
+import brand from '../../sharedfiles/images/bitso_logo.png';
+import dropdown from '../../sharedfiles/images/icon_dropdown.png';
 import style from './style.less';
 
 import { Navbar } from 'react-bootstrap';
@@ -19,7 +19,7 @@ class NavigationBar extends React.Component{
 			<Navbar className = {style.bgnavy} collapseOnSelect >
 				{/*Nav Brand*/}
 	  			<Navbar.Header>
-				    <Navbar.Brand>
+				    <Navbar.Brand pullRight>
 				      	<img src = {brand}/>
 				    </Navbar.Brand>
 					<Navbar.Toggle />
@@ -28,26 +28,26 @@ class NavigationBar extends React.Component{
 				{/*NavItems*/}
 				<Navbar.Collapse>
 				  	<Nav pullLeft>
-				     	<Navbar.Text>
+				     	<Navbar.Text className = {style.text}>
 				      		EXCHANGE
 				    	</Navbar.Text>
 					</Nav>
 					<Nav pullRight>
-				    	<NavItem eventKey={1} href="#" >
+				    	<NavItem eventKey={1} href="#" className = {style.text}>
 				      		1 BTC  = 000,000 MXN
 				    	</NavItem>
-				    	<NavItem eventKey={1} href="#" >
+				    	<NavItem eventKey={1} href="#" className = {style.text}>
 				    		Wallet   <img src = {dropdown}/>
 				    	</NavItem>
-				    	<NavItem eventKey={1} href="#" >
+				    	<NavItem eventKey={1} href="#" className = {style.text}>
 				    		Exchange <img src = {dropdown}/>
 				    	</NavItem>
 				    </Nav>
 			    	<Nav pullRight>
-				    	<NavItem eventKey={1} href="#" >
+				    	<NavItem eventKey={1} href="#" className = {style.text}>
 				    		Ayuda
 				    	</NavItem>
-				    	<NavItem eventKey={1} href="#" >
+				    	<NavItem eventKey={1} href="#" className = {style.text}>
 				    		Usuario
 				    	</NavItem>
 					</Nav>
